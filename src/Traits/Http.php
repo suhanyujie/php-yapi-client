@@ -26,10 +26,14 @@ trait Http
         $options = array_merge($options, $paramArr);
         $httpClient = $this->getClient();
         try {
-            $response = $httpClient->request($options['method'], $options['url'], [
-                'headers' => $options['header'],
-                'body'    => $options['body'],
-            ]);
+            if (strtoupper($options['method']) === 'GET') {
+                $response = $httpClient->request('GET', $options['url']);
+            } else if (strtoupper($options['method']) === 'POST') {
+                $response = $httpClient->request($options['method'], $options['url'], [
+                    'headers' => $options['header'],
+                    'body'    => $options['body'],
+                ]);
+            }
         } catch (\Exception $e) {
             return ['status' => $e->getCode(), 'message' => '请求异常，原因：' . $e->getMessage()];
         }
