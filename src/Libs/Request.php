@@ -23,11 +23,14 @@ class Request
     {
         $options = [
             'url'    => '',
-            'header' => [],
             'body'   => '',
+            'header' => [],
             'debug'  => '',
         ];
         $options = array_merge($options, $params);
+        $options['header'] += [
+            'Content-type'=>'application/json',
+        ];
         $result = $this->httpRequest([
             'url'    => $options['url'],
             'method' => 'post',//
