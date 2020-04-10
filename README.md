@@ -6,7 +6,7 @@
 * yapi 后台编辑文档繁琐、效率低下，如果直接在本地编辑 markdown 文档，然后通过命令行更新到 yapi 后台，此时效率大大提升。
 
 ## usage
-* yc relatePath/businessName/loginDoc.md
+* yc /path/businessName/loginDoc.md
 
 ## todo
 - [ ] 更新文档到组织的 yapi 服务中
