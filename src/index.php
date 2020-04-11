@@ -9,13 +9,16 @@
 
 define('ROOT', realpath('./'));
 include_once ROOT . "/vendor/autoload.php";
+
+use App\Libs\ConfigParse;
+
 $cliArgs = $argv;
 $file = $cliArgs[1] ?? '';
 if (empty($file) || !file_exists($file)) throw new \Exception("请传入合法的文件名", -1);
 
 $request = new \App\Libs\Request;
 $result = $request->post();
-$config = Config::parseConfig();
+$config = ConfigParse::parseConfig();
 $token = $config['token_section']['hr_staff_center'] ?? '';
 $exampleProjectId = 526;
 $exampleInterfaceId = '';
@@ -43,7 +46,7 @@ $desc = $parseService->getApiDesc();
 $markdown = $parseService->getApiMarkdown();
 
 // 保存接口文档
-$result = Yapi::saveOneInterfaceDoc([
+$result = Yapi::saveOrUpdateDoc([
     'token'      => $token,
     'project_id' => $cateInfo['project'],
     'cateid'     => $cateInfo['cateid'],
@@ -96,8 +99,8 @@ class Yapi
         return $result;
     }
 
-    // 保存新接口
-    public static function saveOneInterfaceDoc($params = [])
+    // 保存或更新接口
+    public static function saveOrUpdateDoc($params = [])
     {
         $options = [
             'project_id'    => '',// 可选
@@ -142,13 +145,14 @@ class Yapi
     // 增加文档文件
     public static function parseOneDoc()
     {
-        $config = Config::parseConfig();
+        $config = ConfigParse::parseConfig();
         $token = $config['token_section']['hr_staff_center'] ?? '';
         if (empty($token)) throw new \Exception("请配置对应的 token", -1);
         // todo
         // var_dump($token);exit(PHP_EOL.'20:25'.PHP_EOL);
     }
 
+    // 获取某个项目下的菜单信息
     public static function getCatMenu($params = [])
     {
         $uri = '/api/interface/getCatMenu';
@@ -157,7 +161,7 @@ class Yapi
             'project_id' => '',
         ];
         $options = array_merge($options, $params);
-        $config = Config::parseConfig();
+        $config = ConfigParse::parseConfig();
         $host = self::getYapiHost();
         $url = "{$host}{$uri}";
         $queryParam = [
@@ -172,28 +176,13 @@ class Yapi
         return $result;
     }
 
+    // 获取 yapi 的地址 host
     public static function getYapiHost()
     {
-        $config = Config::parseConfig();
+        $config = ConfigParse::parseConfig();
         $host = $config['base_section']['host'] ?? '';
         $host = rtrim($host, '/');
 
         return $host;
-    }
-}
-
-class Config
-{
-    public static $config = [];
-
-    // 解析配置文件
-    public static function parseConfig(): array
-    {
-        if (!self::$config) {
-            //解析配置文件
-            self::$config = parse_ini_file(ROOT . "/.env", true);
-        }
-
-        return self::$config;
     }
 }
