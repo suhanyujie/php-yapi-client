@@ -45,6 +45,10 @@ $exampleResponseParam = $parseService->getApiResponseParam();
 $desc = $parseService->getApiDesc();
 $markdown = $parseService->getApiMarkdown();
 
+if (empty($cateInfo['cateid'])) {
+    throw new \Exception("请在文档中编辑好文档所属分类id", -49);
+}
+
 // 保存接口文档
 $result = Yapi::saveOrUpdateDoc([
     'token'      => $token,
@@ -66,8 +70,8 @@ if ($resultData['errcode'] !== 0) {
     throw new \Exception($result['errmsg'] ?? '', -2);
 }
 $returnArr = [
-    'status'=>1,
-    'message'=>$resultData['errmsg'] ?? '',
+    'status'  => 1,
+    'message' => $resultData['errmsg'] ?? '',
 ];
 echo json_encode($returnArr, 320);
 die;
