@@ -11,6 +11,7 @@ define('ROOT', realpath('./'));
 include_once ROOT . "/vendor/autoload.php";
 
 use App\Libs\ConfigParse;
+use App\Services\YapiService;
 
 $cliArgs = $argv;
 $file = $cliArgs[1] ?? '';
@@ -26,7 +27,7 @@ $exampleInterfaceId = '';
 $exampleMdFile = $file;
 
 // 获取接口内容
-$interfaceDoc = Yapi::getOneInterface([
+$interfaceDoc = YapiService::getOneInterface([
     'project_id'   => $exampleProjectId,
     'token'        => $token,
     'interface_id' => 90341,
@@ -50,7 +51,7 @@ if (empty($cateInfo['cateid'])) {
 }
 
 // 保存接口文档
-$result = Yapi::saveOrUpdateDoc([
+$result = YapiService::saveOrUpdateDoc([
     'token'      => $token,
     'project_id' => $cateInfo['project'],
     'cateid'     => $cateInfo['cateid'],
@@ -75,118 +76,3 @@ $returnArr = [
 ];
 echo json_encode($returnArr, 320);
 die;
-
-// 获取菜单
-$result = Yapi::getCatMenu([
-    'token'      => $token,
-    'project_id' => $exampleProjectId,
-]);
-
-
-echo json_encode($result, 320);die;
-
-class Yapi
-{
-    // 获取一个接口的详细信息
-    public static function getOneInterface($params = [])
-    {
-        $options = [
-            'project_id'   => '',
-            'token'        => '',
-            'interface_id' => '',
-        ];
-        $options = array_merge($options, $params);
-        $host = Yapi::getYapiHost();
-        $options['url'] = $host."/api/interface/get?token={$options['token']}&id={$options['interface_id']}";
-        $result = (new \App\Libs\Request)->get($options);
-
-        return $result;
-    }
-
-    // 保存或更新接口
-    public static function saveOrUpdateDoc($params = [])
-    {
-        $options = [
-            'project_id'    => '',// 可选
-            'cateid'        => '7401',// 分类id
-            'token'         => '',
-            'title'         => '',
-            'url_path'         => '',
-            'desc'          => '',
-            'markdown'          => '',
-            'method'        => 'POST',
-            'interface_id'  => '',
-            'status'        => 'undone',
-            'res_body_type' => 'json',
-            'res_body' => '',
-        ];
-        $options = array_merge($options, $params);
-        $authParam = [
-            'token'=> $options['token'],
-        ];
-        $apiPath = '/api/interface/save';
-        $url = self::getYapiHost().$apiPath;
-        $body = [
-                'title'         => $options['title'],
-                'catid'         => $options['cateid'],
-                'path'          => $options['url_path'],
-                'status'        => $options['status'],
-                'res_body_type' => $options['res_body_type'],
-                'res_body'      => $options['res_body'],
-                'desc'          => $options['desc'],
-                'markdown'      => $options['markdown'],
-                'method'        => $options['method'],
-                'req_params'    => [],
-            ] + $authParam;
-        $result = (new \App\Libs\Request)->post([
-            'url'    => $url,
-            'body'   => json_encode($body, 320),
-        ]);
-
-        return $result;
-    }
-
-    // 增加文档文件
-    public static function parseOneDoc()
-    {
-        $config = ConfigParse::parseConfig();
-        $token = $config['token_section']['hr_staff_center'] ?? '';
-        if (empty($token)) throw new \Exception("请配置对应的 token", -1);
-        // todo
-        // var_dump($token);exit(PHP_EOL.'20:25'.PHP_EOL);
-    }
-
-    // 获取某个项目下的菜单信息
-    public static function getCatMenu($params = [])
-    {
-        $uri = '/api/interface/getCatMenu';
-        $options = [
-            'token'      => '',
-            'project_id' => '',
-        ];
-        $options = array_merge($options, $params);
-        $config = ConfigParse::parseConfig();
-        $host = self::getYapiHost();
-        $url = "{$host}{$uri}";
-        $queryParam = [
-            'project_id' => $options['project_id'],
-            'token'      => $options['token'],
-        ];
-        $result = (new \App\Libs\Request)->get([
-            'url'  => $url,
-            'data' => $queryParam,
-        ]);
-
-        return $result;
-    }
-
-    // 获取 yapi 的地址 host
-    public static function getYapiHost()
-    {
-        $config = ConfigParse::parseConfig();
-        $host = $config['base_section']['host'] ?? '';
-        $host = rtrim($host, '/');
-
-        return $host;
-    }
-}
