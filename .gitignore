@@ -3,3 +3,5 @@
 .env
 *.gz
 vendor/
+yc
+yc.phar
