@@ -76,3 +76,4 @@ $returnArr = [
 ];
 echo json_encode($returnArr, 320);
 die;
+?>

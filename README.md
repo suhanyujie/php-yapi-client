@@ -11,7 +11,7 @@
 - `cd php-yapi-client`
 - `composer install`
 - 打包成 phar `./build.php`
-- MacOS：`ln -s yc.phar /usr/local/bin/yc`
+- MacOS：`cp yc.phar /usr/local/bin/yc`
 
 ### 运行
 - 1.配置文件
