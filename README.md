@@ -9,7 +9,9 @@
 ### 下载 
 - `git clone https://github.com/suhanyujie/php-yapi-client.git`
 - `cd php-yapi-client`
-- MacOS：`ln -s src/index.php /usr/local/bin/yc`
+- `composer install`
+- 打包成 phar `./build.php`
+- MacOS：`ln -s yc.phar /usr/local/bin/yc`
 
 ### 运行
 - 1.配置文件
