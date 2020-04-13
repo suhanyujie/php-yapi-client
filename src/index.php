@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * Created by PhpStorm.
@@ -7,7 +6,7 @@
  * Time: 16:53
  */
 
-define('ROOT', realpath('./'));
+define('ROOT', dirname(dirname(__FILE__)));
 include_once ROOT . "/vendor/autoload.php";
 
 use App\Libs\ConfigParse;
