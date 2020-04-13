@@ -1,6 +1,11 @@
 ### 简要描述
 - 用户注册接口
 
+### relate_flag
+- group=1688
+- project=xxx
+- cateid=xxxx
+
 ### 请求URL
 - `http://api.example.com/api/user/register`
   
