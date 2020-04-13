@@ -12,6 +12,15 @@ use App\Libs\ConfigParse;
 
 class YapiService
 {
+    public static $staticData = [];
+
+    protected $data = [];
+
+    public function __construct()
+    {
+
+    }
+
     // 获取一个接口的详细信息
     public static function getOneInterface($params = [])
     {
@@ -63,6 +72,8 @@ class YapiService
                 'method'        => $options['method'],
                 'req_params'    => [],
             ] + $authParam;
+        self::$staticData['pre_one_api_params'] = $options;
+        self::$staticData['save_one_api_res'] =
         $result = (new \App\Libs\Request)->post([
             'url'    => $url,
             'body'   => json_encode($body, 320),
@@ -70,6 +81,30 @@ class YapiService
 
         return $result;
     }
+
+    /**
+     * @desc 输出显示上一次更新的文档的链接地址
+     */
+    public static function showInterfaceUrl()
+    {
+        $url = self::getInterfaceUrl();
+        echo date('Y-m-d H:i:s')."\tdoc_url: {$url}";
+    }
+
+    /**
+     * @desc 获取上一次更新的文档的链接地址
+     */
+    public static function getInterfaceUrl()
+    {
+        $result = self::$staticData['save_one_api_res'];
+        $interfaceId = $result['data']['data'][0]['_id'] ?? '';
+        $host = YapiService::getYapiHost();
+        $param = self::$staticData['pre_one_api_params'];
+        $url = "{$host}/project/{$param['project_id']}/interface/api/{$interfaceId}";
+
+        return $url;
+    }
+
 
     // 增加文档文件
     public static function parseOneDoc()

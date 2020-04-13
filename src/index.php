@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /**
  * Created by PhpStorm.
@@ -74,5 +75,9 @@ $returnArr = [
     'message' => $resultData['errmsg'] ?? '',
 ];
 echo json_encode($returnArr, 320);
+
+echo PHP_EOL;
+YapiService::showInterfaceUrl();
+echo PHP_EOL;
 die;
 ?>
