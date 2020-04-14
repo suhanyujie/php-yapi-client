@@ -1,10 +1,11 @@
 # php-yapi-client
 * 一个 [yapi](https://hellosean1025.github.io/yapi/index.html) 客户端，为了方便将本地编写的 markdown 文档解析上传到公司/组织的 yapi 文档管理中心
+* 换句话说，将本地 markdown 文档保存到 yapi 服务上。
 
 ## instruction
 ### 痛点
 * 公司的文档服务器可能不是很靠谱，有可能丢失数据。你可以建立一个 git 仓库存放你的 markdown 文档。而 markdown 文档又可以直接通过 `yc` 命令提交到你公司的文档服务中。相当于多一个备份。
-* yapi 后台编辑文档繁琐、效率低下，如果直接在本地编辑 markdown 文档，然后通过命令行更新到 yapi 后台，此时效率大大提升。
+* yapi 后台编辑文档繁琐、效率不够高，如果直接在本地编辑 markdown 文档，然后通过命令行更新到 yapi 后台，此时效率大大提升。
 
 ## usage
 ### 下载 
