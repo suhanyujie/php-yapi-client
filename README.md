@@ -8,12 +8,16 @@
 * yapi 后台编辑文档繁琐、效率不够高，如果直接在本地编辑 markdown 文档，然后通过命令行更新到 yapi 后台，此时效率大大提升。
 
 ## usage
+- _目前只支持 macOS、Linux 系统_
+
 ### 下载 
 - `git clone https://github.com/suhanyujie/php-yapi-client.git`
 - `cd php-yapi-client`
 - `composer install`
+
+### 打包
 - 打包成 phar `./build.php`
-- MacOS：`cp yc.phar /usr/local/bin/yc`
+- `cp yc.phar /usr/local/bin/yc`
 
 ### 运行
 - 1.配置文件
