@@ -5,9 +5,10 @@ $phar = new Phar('yc.phar');
 $phar->buildFromDirectory(__DIR__, '/\.php$/');
 $phar->addFile('.env');
 $phar->compressFiles(Phar::GZ);
+// setStub 设定启动器，需要拼接上 `#!/usr/bin/env php\n`
+// 表示使用环境变量中的 php **解释执行**
+$phar->setStub("#!/usr/bin/env php\n".Phar::createDefaultStub('src/index.php'));
 $entry = 'src/index.php';
-// $phar->setStub(file_get_contents($entry));
-$phar->setDefaultStub($entry);
 $phar->stopBuffering();
 
 /*

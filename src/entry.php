@@ -18,7 +18,8 @@ if (extension_loaded('apc') && filter_var(ini_get('apc.enable_cli'), FILTER_VALI
 }
 
 Phar::mapPhar('yc.phar');
-require 'phar://yc.phar/src/index.php';
+
+require 'phar://yc.phar';
 __HALT_COMPILER();
 
 
