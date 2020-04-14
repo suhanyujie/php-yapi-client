@@ -127,15 +127,4 @@ class ParserService
 
         return $desc;
     }
-
-    /**
-     * @desc alpha
-     */
-    public function getDocInfo()
-    {
-        $docContent = $this->data['content'];
-
-
-        return $info;
-    }
 }
