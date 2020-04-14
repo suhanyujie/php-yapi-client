@@ -68,7 +68,7 @@ if ($result['status'] !== 1) {
 }
 $resultData = $result['data'] ?? [];
 if ($resultData['errcode'] !== 0) {
-    throw new \Exception($result['errmsg'] ?? '', -2);
+    throw new \Exception(json_encode($resultData, 320), -2);
 }
 $returnArr = [
     'status'  => 1,
