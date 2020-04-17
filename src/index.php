@@ -41,6 +41,7 @@ $cateInfo = $parseService->getYapiFlag();
 
 // 解析出文档url、请求参数、响应参数、返回值示例等
 $urlPath = $parseService->getApiPath();
+$apiMethod = $parseService->getApiMethod();
 $exampleParam = $parseService->getApiParam();
 $exampleResponseParam = $parseService->getApiResponseParam();
 $desc = $parseService->getApiDesc();
@@ -57,6 +58,7 @@ $result = YapiService::saveOrUpdateDoc([
     'cateid'     => $cateInfo['cateid'],
     'title'      => $apiTitle,
     'url_path'   => $urlPath,
+    'method'     => $apiMethod,
     'desc'       => $desc,
     'markdown'   => $markdown,
     'req_params' => $exampleParam,

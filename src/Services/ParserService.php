@@ -85,6 +85,18 @@ class ParserService
     }
 
     /**
+     * @desc 获取文档接口的 method
+     */
+    public function getApiMethod()
+    {
+        $doc = $this->data['content'];
+        if (empty($doc)) return '';
+        $pattern = '@### 请求方式\n- (\w+)@';
+        preg_match_all($pattern, $doc, $matchRes);
+        return trim($matchRes[1][0] ?? '');
+    }
+
+    /**
      * @desc 获取文档接口的入参示例
      */
     public function getApiParam()
