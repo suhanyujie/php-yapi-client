@@ -18,17 +18,18 @@
 - `cd php-yapi-client`
 - `composer install`
 
+### 配置
+- `cp env.example .env`
+- 根据需要，在 `.env` 文件中修改 yapi 服务的地址以及文档 project 对应的 token
+
 ### 打包
 - 打包成 phar `./build.php`
 - `cp yc.phar /usr/local/bin/yc`
 
 ### 运行
-- 1.配置文件
-    - `cp env.example .env`
-    - 根据需要，在 `.env` 文件中修改 yapi 服务的地址以及文档 project 对应的 token
-- 2.按照要求写文档
+- 1.按照要求写文档
     - 要使用该 yapi 客户端，需要必须按照合法的要求写 markdown，格式参考[此模板](docs/md_doc_template.md)。
-- 3.使用 yc 提交文档。例如：`yc /path/businessName/loginDoc.md`
+- 2.使用 `yc` 命令提交文档。例如：`yc /path/businessName/loginDoc.md`
 
 ## todo
 - [x] 更新文档到组织的 yapi 服务中
