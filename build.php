@@ -10,12 +10,12 @@ $phar->compressFiles(Phar::GZ);
 $phar->setStub("#!/usr/bin/env php\n".Phar::createDefaultStub('src/index.php'));
 $entry = 'src/index.php';
 $phar->stopBuffering();
+echo  "打包完成\n";
 
 /*
 ## 参考
 * https://blog.csdn.net/u011474028/article/details/54973571
 * https://www.ctolib.com/topics-121626.html
-
 
 */
 ?>
