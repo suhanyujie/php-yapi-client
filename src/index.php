@@ -20,7 +20,7 @@ if (empty($file) || !file_exists($file)) throw new \Exception("请传入合法�
 $request = new \App\Libs\Request;
 $result = $request->post();
 $config = ConfigParse::parseConfig();
-$token = $config['token_section']['hr_staff_center'] ?? '';
+$token = $config['token_section']['default_token'] ?? '';
 $exampleProjectId = 526;
 $exampleInterfaceId = '';
 // $exampleMdFile = $config['base_section']['example_file'] ?? '';
