@@ -13,6 +13,9 @@ include_once ROOT . "/vendor/autoload.php";
 use App\Libs\ConfigParse;
 use App\Services\YapiService;
 
+if (PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg') {
+    echo 'Warning: yc should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
+}
 $cliArgs = $argv;
 $file = $cliArgs[1] ?? '';
 if (empty($file) || !file_exists($file)) throw new \Exception("请传入合法的文件名", -1);
