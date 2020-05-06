@@ -100,7 +100,13 @@ class YapiService
         $interfaceId = $result['data']['data'][0]['_id'] ?? '';
         $host = YapiService::getYapiHost();
         $param = self::$staticData['pre_one_api_params'];
-        $url = "{$host}/project/{$param['project_id']}/interface/api/{$interfaceId}";
+        // $result['data']['data'] 为空时，可能是新增接口，新增接口时在响应中无法拿到接口id
+        // 新增接口，直接展示对应的分类链接
+        if (empty($result['data']['data'])) {
+            $url = "{$host}/project/{$param['project_id']}/interface/api/cat_{$param['cateid']}";
+        } else {
+            $url = "{$host}/project/{$param['project_id']}/interface/api/{$interfaceId}";
+        }
 
         return $url;
     }
