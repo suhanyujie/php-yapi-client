@@ -18,7 +18,11 @@ if (PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg') {
 }
 $cliArgs = $argv;
 $file = $cliArgs[1] ?? '';
-if (empty($file) || !file_exists($file)) throw new \Exception("请传入合法的文件名", -1);
+// 如果不是绝对路径，则将文件路径转为绝对路径
+if (strpos($file[0], '/') !== 0) {
+    $file = realpath($file);
+}
+if (empty($file) || !file_exists($file)) throw new \Exception("文件不存在！", -1);
 
 $request = new \App\Libs\Request;
 $result = $request->post();

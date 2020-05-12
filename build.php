@@ -4,13 +4,17 @@
 $phar = new Phar('yc.phar');
 $phar->buildFromDirectory(__DIR__, '/\.php$/');
 $phar->addFile('.env');
-$phar->compressFiles(Phar::GZ);
+try {
+    $phar->compressFiles(Phar::GZ);
+} catch (\Exception $e) {
+    $phar->compressFiles(Phar::NONE);
+}
 // setStub 设定启动器，需要拼接上 `#!/usr/bin/env php\n`
 // 表示使用环境变量中的 php **解释执行**
 $phar->setStub("#!/usr/bin/env php\n".Phar::createDefaultStub('src/index.php'));
 $entry = 'src/index.php';
 $phar->stopBuffering();
-echo  "打包完成\n";
+echo  "恭喜，打包完成！\n";
 
 /*
 ## 参考
