@@ -6,7 +6,7 @@ $phar->buildFromDirectory(__DIR__, '/\.php$/');
 $phar->addFile('.env');
 try {
     $phar->compressFiles(Phar::GZ);
-} catch (\Exception $e) {
+} catch (PharException $e) {
     $phar->compressFiles(Phar::NONE);
 }
 // setStub 设定启动器，需要拼接上 `#!/usr/bin/env php\n`
