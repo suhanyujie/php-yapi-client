@@ -29,7 +29,8 @@
 ### 运行
 - 1.按照要求写文档
     - 要使用该 yapi 客户端，需要必须按照合法的要求写 markdown，格式参考[此模板](docs/md_doc_template.md)。
-- 2.使用 `yc` 命令提交文档。例如：`yc /path/businessName/loginDoc.md`
+- 2.使用 `yc` 命令提交文档。例如：`yc /path/businessName/loginDoc.md`。
+    * 当然如果需要提交当前路径下的 `loginDoc.md` 文件，可以执行 `yc loginDoc.md`
 
 ## todo
 - [x] 更新文档到组织的 yapi 服务中
