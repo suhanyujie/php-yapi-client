@@ -21,6 +21,76 @@ class YapiService
 
     }
 
+    /**
+     * @desc 执行保存或更新
+     */
+    public static function doSaveOrUpdate()
+    {
+        global $argv;
+        $cliArgs = $argv;
+        $file = $cliArgs[2] ?? '';
+        // 如果不是绝对路径，则将文件路径转为绝对路径
+        if (strpos($file[0], '/') !== 0) {
+            $file = realpath($file);
+        }
+        if (empty($file) || !file_exists($file)) throw new \Exception("文件不存在！", -1);
+        $config = ConfigParse::parseConfig();
+        $token = $config['token_section']['default_token'] ?? '';
+        $exampleProjectId = 526;
+        $exampleMdFile = $file;
+        // 获取接口内容
+//        $interfaceDoc = YapiService::getOneInterface([
+//            'project_id'   => $exampleProjectId,
+//            'token'        => $token,
+//            'interface_id' => 90341,
+//        ]);
+        // 解析出项目、分类
+        $parseService = new \App\Services\ParserService;
+        $parseService->setDocFile($exampleMdFile);
+        $apiTitle = $parseService->getTitle();
+        $cateInfo = $parseService->getYapiFlag();
+        if (empty($cateInfo['cateid'])) {
+            throw new \Exception("请在文档中编辑好文档所属分类id", -49);
+        }
+        // 解析出文档url、请求参数、响应参数、返回值示例等
+        $urlPath = $parseService->getApiPath();
+        $apiMethod = $parseService->getApiMethod();
+        $exampleParam = $parseService->getApiParam();
+        $exampleResponseParam = $parseService->getApiResponseParam();
+        $desc = $parseService->getApiDesc();
+        $markdown = $parseService->getApiMarkdown();
+        // 保存接口文档
+        $result = YapiService::saveOrUpdateDoc([
+            'token'      => $token,
+            'project_id' => $cateInfo['project'],
+            'cateid'     => $cateInfo['cateid'],
+            'title'      => $apiTitle,
+            'url_path'   => $urlPath,
+            'method'     => $apiMethod,
+            'desc'       => $desc,
+            'markdown'   => $markdown,
+            'req_params' => $exampleParam,
+            'res_body'   => $exampleResponseParam,
+            'status'     => 'done',
+        ]);
+        if ($result['status'] !== 1) {
+            throw new \Exception($result['message'] ?? '', -1);
+        }
+        $resultData = $result['data'] ?? [];
+        if ($resultData['errcode'] !== 0) {
+            throw new \Exception(json_encode($resultData, 320), -2);
+        }
+        $returnArr = [
+            'status'  => 1,
+            'message' => $resultData['errmsg'] ?? '',
+        ];
+        echo json_encode($returnArr, 320);
+
+        echo PHP_EOL;
+        YapiService::showInterfaceUrl();
+        echo PHP_EOL;
+    }
+
     // 获取一个接口的详细信息
     public static function getOneInterface($params = [])
     {

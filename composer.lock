@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0de1d3fbf2d96bfb325ff2f1f370267",
+    "content-hash": "94ce7f43bf9e55a99fb2a95a90792377",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -463,6 +463,72 @@
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
             "time": "2020-04-06T13:34:26+00:00"
+        },
+        {
+            "name": "inhere/console",
+            "version": "v3.1.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inhere/php-console.git",
+                "reference": "6d0e3bab3a1d164fb8deed16863504efeb57ac7c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inhere/php-console/zipball/6d0e3bab3a1d164fb8deed16863504efeb57ac7c",
+                "reference": "6d0e3bab3a1d164fb8deed16863504efeb57ac7c",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">7.1.0",
+                "toolkit/cli-utils": "~1.0",
+                "toolkit/php-utils": "~1.0",
+                "toolkit/str-utils": "~1.0",
+                "toolkit/sys-utils": "~1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "padraic/phar-updater": "A thing to make PHAR self-updating easy and secure.",
+                "symfony/process": "php process operation",
+                "text/template": "Single-Class string template engine for PHP5/7 supporting if/loops/filters"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Inhere\\Console\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "a php console library, provide console argument parse, console controller/command run, color style, user interactive, information show.",
+            "homepage": "https://github.com/inhere/php-console",
+            "keywords": [
+                "cli",
+                "color",
+                "command",
+                "command-line",
+                "console",
+                "console-application",
+                "console-color",
+                "phar"
+            ],
+            "time": "2020-05-25T13:48:28+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -1227,6 +1293,222 @@
                 "standards"
             ],
             "time": "2019-11-18T17:27:11+00:00"
+        },
+        {
+            "name": "toolkit/cli-utils",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-toolkit/cli-utils.git",
+                "reference": "4ec2f5bb0f44c727dae9f6e1ee14b49c53be0908"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-toolkit/cli-utils/zipball/4ec2f5bb0f44c727dae9f6e1ee14b49c53be0908",
+                "reference": "4ec2f5bb0f44c727dae9f6e1ee14b49c53be0908",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">7.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5"
+            },
+            "suggest": {
+                "inhere/console": "a lightweight php console application library.",
+                "inhere/php-validate": "Very lightweight data validate tool"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Toolkit\\Cli\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "some cli tool library of the php",
+            "homepage": "https://github.com/php-toolkit/cli-utils",
+            "keywords": [
+                "library",
+                "php",
+                "tool"
+            ],
+            "time": "2020-01-04T09:50:38+00:00"
+        },
+        {
+            "name": "toolkit/php-utils",
+            "version": "v1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-toolkit/php-utils.git",
+                "reference": "6e4b249b1c3cae36e19db466ddf5c7dd2c985904"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-toolkit/php-utils/zipball/6e4b249b1c3cae36e19db466ddf5c7dd2c985904",
+                "reference": "6e4b249b1c3cae36e19db466ddf5c7dd2c985904",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">7.1.0"
+            },
+            "suggest": {
+                "inhere/console": "a lightweight php console application library.",
+                "inhere/php-validate": "Very lightweight data validate tool"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Toolkit\\PhpUtil\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "some php tool library of the php",
+            "homepage": "https://github.com/php-toolkit/php-utils",
+            "keywords": [
+                "library",
+                "php",
+                "tool"
+            ],
+            "time": "2019-02-02T16:35:42+00:00"
+        },
+        {
+            "name": "toolkit/str-utils",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-toolkit/str-utils.git",
+                "reference": "2e0b081c7c86e4fb92d1dca63bd8c0449cb6b278"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-toolkit/str-utils/zipball/2e0b081c7c86e4fb92d1dca63bd8c0449cb6b278",
+                "reference": "2e0b081c7c86e4fb92d1dca63bd8c0449cb6b278",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">7.1.0"
+            },
+            "suggest": {
+                "inhere/php-validate": "Very lightweight data validate tool"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Toolkit\\StrUtil\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "some string tool library of the php",
+            "homepage": "https://github.com/php-toolkit/str-utils",
+            "keywords": [
+                "library",
+                "php",
+                "string",
+                "tool"
+            ],
+            "time": "2019-02-27T15:38:11+00:00"
+        },
+        {
+            "name": "toolkit/sys-utils",
+            "version": "v1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-toolkit/sys-utils.git",
+                "reference": "cf6ca81efed472ca4457e6f4325fe00398d2d0ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-toolkit/sys-utils/zipball/cf6ca81efed472ca4457e6f4325fe00398d2d0ca",
+                "reference": "cf6ca81efed472ca4457e6f4325fe00398d2d0ca",
+                "shasum": "",
+                "mirrors": [
+                    {
+                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "php": ">7.1.0"
+            },
+            "suggest": {
+                "inhere/console": "a lightweight php console application library.",
+                "inhere/php-validate": "Very lightweight data validate tool"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Toolkit\\Sys\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "inhere",
+                    "email": "in.798@qq.com",
+                    "homepage": "http://www.yzone.net/"
+                }
+            ],
+            "description": "some system tool library of the php",
+            "homepage": "https://github.com/php-toolkit/sys-utils",
+            "keywords": [
+                "library",
+                "php",
+                "tool"
+            ],
+            "time": "2019-02-02T16:24:48+00:00"
         },
         {
             "name": "voku/portable-ascii",
