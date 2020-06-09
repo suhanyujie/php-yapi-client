@@ -68,10 +68,16 @@ LOGO;
      */
     public function execute()
     {
+        global $argv;
         $this->app = new \Inhere\Console\Application();
         $this->setConfig();
+        $paramCount = count($argv);
         $this->customerRegist();
-
+        if ($paramCount <= 2) {
+            $this->app->showVersionInfo();
+            $this->app->showHelpInfo();
+            die;
+        }
         $this->app->run();
     }
 
