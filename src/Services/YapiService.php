@@ -28,6 +28,7 @@ class YapiService
     {
         global $argv;
         $cliArgs = $argv;
+        $originFilePath =
         $file = $cliArgs[2] ?? '';
         // 如果不是绝对路径，则将文件路径转为绝对路径
         if (strpos($file[0], '/') !== 0) {
@@ -35,7 +36,18 @@ class YapiService
         }
         if (empty($file) || !file_exists($file)) throw new \Exception("文件不存在！", -1);
         $config = ConfigParse::parseConfig();
-        $token = $config['token_section']['default_token'] ?? '';
+        $tokenList = $config['token_section'];
+        if (count($tokenList) > 1 && count($cliArgs) != 4) {
+            $tokenKeys = array_keys($tokenList);
+            $cmd = "【 yc file {$originFilePath} {$tokenKeys[0]} 】";
+            echo "请确定使用的 token，例如：".$cmd."\n";
+            echo "可选的 token key 列表：".json_encode($tokenKeys, 320)."\n";
+            die;
+        } elseif(count($tokenList) > 1 && count($cliArgs) == 4) {
+            $token = $tokenList[$cliArgs[3]];
+        } else {
+            $token = $config['token_section']['default_token'] ?? '';
+        }
         $exampleProjectId = 526;
         $exampleMdFile = $file;
         // 获取接口内容
