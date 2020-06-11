@@ -28,8 +28,31 @@ class Application extends BaseApplication
 
     protected $io;
 
+    const VERSION = '0.1.0';
+
     /**@var \Inhere\Console\Application */
     protected $app;
+
+    /** @var array Application config data */
+    private $config = [
+        'name'         => 'My Console Application',
+        'description'  => 'This is my console application',
+        'debug'        => 'debug',
+        'profile'      => false,
+        'version'      => '0.1.1',
+        'publishAt'    => '2020.05.24',
+        'updateAt'     => '2020.06.10',
+        'rootPath'     => '',
+        'strictMode'   => false,
+        'hideRootPath' => true,
+
+        // 'timeZone' => 'Asia/Shanghai',
+        // 'env' => 'prod', // dev test prod
+        // 'charset' => 'UTF-8',
+
+        'logoText'  => '',
+        'logoStyle' => 'info',
+    ];
 
     /**
      * 字符串 logo
@@ -45,7 +68,7 @@ class Application extends BaseApplication
                       
 LOGO;
 
-    public function __construct(string $name = 'yc', string $version = '0.1.0')
+    public function __construct(string $name = 'yc', string $version = self::VERSION)
     {
         static $shutdownRegistered = false;
 
