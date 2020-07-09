@@ -41,6 +41,8 @@
 
 ## todo
 - [x] 更新文档到组织的 yapi 服务中
+- [x] 上传时，在配置的多个 token 中选一个项目的token
+- [x] 支持上传目录下的所有 md 文档
 
 ## reference
 * https://hellosean1025.github.io/yapi/documents/index.html
