@@ -28,7 +28,7 @@ class YapiService
      * 2.参数个数为 3 个时，如 `yc file /some/path/a.md` 同第一种功能
      * 3.参数个数为 3 个时，如 `yc dir /some/path` 表示使用环境变量中的 token 提交 path 目录下的所有 md 文档
      * 4.参数个数为 4 个时，如 `yc file someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该md文档
-     * 5.参数个数为 4 个时，如 `yc dir someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该目录下的md文档
+     * 5.参数个数为 4 个时，如 `yc dir someTokenFlag /some/path` 表示使用 someTokenFlag 对应的 token 提交目录`/some/path`下的md文档
      */
     public static function doSaveOrUpdate()
     {
