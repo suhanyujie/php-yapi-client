@@ -96,10 +96,12 @@ LOGO;
         $this->setConfig();
         $paramCount = count($argv);
         $this->customerRegist();
-        if ($paramCount <= 2) {
+        if ($paramCount < 2) {
             $this->app->showVersionInfo();
             $this->app->showHelpInfo();
             die;
+        } elseif($paramCount ===2 ) {
+            YapiService::doSaveOrUpdate();
         }
         $this->app->run();
     }
@@ -112,6 +114,10 @@ LOGO;
         $this->app->command('file', function(Input $in, Output $out) {
             YapiService::doSaveOrUpdate();
         }, 'Enter a doc file path');
+
+        $this->app->command('dir', function(Input $in, Output $out) {
+            YapiService::doSaveOrUpdate();
+        }, 'Enter a doc dir path');
 
         $this->app->command('hello', function(Input $in, Output $out) {
             $out->info("hello terminal");

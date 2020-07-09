@@ -18,47 +18,116 @@ class YapiService
 
     public function __construct()
     {
-
+        $token = getenv('YC_TOKEN');
+        var_dump($token);exit(PHP_EOL.'4:04 下午'.PHP_EOL);
     }
 
     /**
      * @desc 执行保存或更新
+     * 1.参数个数为 2 个时，表示直接提交某个md文档到 yapi 上，如 `yc /some/path/a.md`，token 从环境变量总获取 YC_TOKEN
+     * 2.参数个数为 3 个时，如 `yc file /some/path/a.md` 同第一种功能
+     * 3.参数个数为 3 个时，如 `yc dir /some/path` 表示使用环境变量中的 token 提交 path 目录下的所有 md 文档
+     * 4.参数个数为 4 个时，如 `yc file someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该md文档
+     * 5.参数个数为 4 个时，如 `yc dir someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该目录下的md文档
      */
     public static function doSaveOrUpdate()
     {
         global $argv;
-        $cliArgs = $argv;
+        $originCliArgs = $cliArgs = $argv;
+        if ($cliArgs[0] === 'php') {
+            $cliArgs = array_slice($cliArgs, 1, 10);
+        }
         $originFilePath =
         $file = $cliArgs[2] ?? '';
-        // 如果不是绝对路径，则将文件路径转为绝对路径
-        if (strpos($file[0], '/') !== 0) {
-            $file = realpath($file);
-        }
-        if (empty($file) || !file_exists($file)) throw new \Exception("文件不存在！", -1);
         $config = ConfigParse::parseConfig();
         $tokenList = $config['token_section'];
-        if (count($tokenList) > 1 && count($cliArgs) != 4) {
+        $actionType = 'file';// file/fold 表示提交文档/提交目录下的所有md文档
+        if (count($tokenList) > 1 && count($cliArgs) == 2) {
+            // 参数个数为 2 个时，表示 token 从环境变量中获取
+            // 如 `yc /some/path/a.md`，`yc` 为第 0 个参数
+            $token = getenv('YC_TOKEN');
+            $file      = $cliArgs[1];
+            if (strpos($file, '/') !== 0) {
+                $file = realpath($file);
+            }
+        } elseif (count($tokenList) > 1 && count($cliArgs) == 3) {
+            // 参数个数为 3 个时，表示 tokenFlag 从环境变量中获取
+            // 如 `yc file /some/path/a.md`，其中 `yc` 为第 0 个参数
+            $token = getenv('YC_TOKEN');
+            if (empty($token)) {
+                throw new \Exception("请配置环境变量 YC_TOKEN", -1);
+            }
+            $actionType = $cliArgs[1];// file/fold
+            $file      = $cliArgs[2];
+            if (strpos($file, '/') !== 0) {
+                $file = realpath($file);
+            }
+        } elseif (count($tokenList) > 1 && count($cliArgs) != 4) {
             $tokenKeys = array_keys($tokenList);
-            $cmd = "【 yc file {$originFilePath} {$tokenKeys[0]} 】";
-            echo "请确定使用的 token，例如：".$cmd."\n";
-            echo "可选的 token key 列表：".json_encode($tokenKeys, 320)."\n";
+            $cmd       = "【 yc file {$originFilePath} {$tokenKeys[0]} 】";
+            echo "请确定使用的 token，例如：" . $cmd . "\n";
+            echo "可选的 token key 列表：" . json_encode($tokenKeys, 320) . "\n";
             die;
-        } elseif(count($tokenList) > 1 && count($cliArgs) == 4) {
-            $token = $tokenList[$cliArgs[3]];
+        } elseif (count($tokenList) > 1 && count($cliArgs) == 4) {
+            // 参数个数为 4 个时，表示 tokenFlag 从参数中获取
+            // 如 `yc file someTokenFlag /some/path/a.md`，`yc` 为第 0 个参数
+            $tokenFlag = $cliArgs[2];
+            $file      = $cliArgs[3];
+            if (strpos($file, '/') !== 0) {
+                $file = realpath($file);
+            }
+            $token = $tokenList[$tokenFlag] ?? '';
+            $actionType = $cliArgs[1];// file/fold
         } else {
             $token = $config['token_section']['default_token'] ?? '';
         }
+        if (empty($token)) {
+            throw new \Exception("指定的 token 不存在", -2);
+        }
+        if (empty($file) || !file_exists($file)) throw new \Exception("文件不存在！", -1);
         $exampleProjectId = 526;
-        $exampleMdFile = $file;
+        self::$staticData['token'] = $token;
+        switch ($actionType) {
+            case 'dir':// 提交目录下的所有md文档
+                $dir = $file;
+                $fs = new \FilesystemIterator($dir);
+                foreach ($fs as $fileObj) {
+                    $tmpFilename = $fileObj->getFilename();
+                    $tmpExt = $fileObj->getExtension();
+                    // 不是 md 文档的，则不上传
+                    if (!in_array($tmpExt, ['md', ])) {
+                        continue;
+                    }
+                    // 忽略 readme 文件
+                    if (strpos($tmpFilename, 'README') !== false) {
+                        continue;
+                    }
+                    $tmpFileRealPath = $fileObj->getRealPath();
+                    self::saveOrUpdateOneDoc($tmpFileRealPath);
+                    echo "|----------------------------------------------\n";
+                }
+                break;
+            default:// 默认提交一个 md 文档
+                self::saveOrUpdateOneDoc($file);
+        }
         // 获取接口内容
 //        $interfaceDoc = YapiService::getOneInterface([
 //            'project_id'   => $exampleProjectId,
 //            'token'        => $token,
 //            'interface_id' => 90341,
 //        ]);
+    }
+
+    public static function saveOrUpdateOneDoc($file = '')
+    {
+        if (!file_exists($file)) {
+            throw new \Exception("文档[{$file}]不存在",-3);
+        }
+        $token = self::$staticData['token'];
+        $mdFile = $file;
         // 解析出项目、分类
         $parseService = new \App\Services\ParserService;
-        $parseService->setDocFile($exampleMdFile);
+        $parseService->setDocFile($mdFile);
         $apiTitle = $parseService->getTitle();
         $cateInfo = $parseService->getYapiFlag();
         if (empty($cateInfo['cateid'])) {

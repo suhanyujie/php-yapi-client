@@ -17,7 +17,6 @@ use App\Services\YapiService;
 if (PHP_SAPI !== 'cli' && PHP_SAPI !== 'phpdbg') {
     echo 'Warning: yc should be invoked via the CLI version of PHP, not the '.PHP_SAPI.' SAPI'.PHP_EOL;
 }
-
 (new \App\Yc\Console\Application)->execute();
 die;
 ?>
