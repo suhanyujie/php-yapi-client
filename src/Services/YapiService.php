@@ -262,7 +262,6 @@ class YapiService
         return $url;
     }
 
-
     // 增加文档文件
     public static function parseOneDoc()
     {
