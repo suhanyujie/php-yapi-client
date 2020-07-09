@@ -102,6 +102,7 @@ LOGO;
             die;
         } elseif($paramCount ===2 ) {
             YapiService::doSaveOrUpdate();
+            die;
         }
         $this->app->run();
     }
