@@ -32,6 +32,13 @@
 - 2.使用 `yc` 命令提交文档。例如：`yc /path/businessName/loginDoc.md`。
     * 当然如果需要提交当前路径下的 `loginDoc.md` 文件，可以执行 `yc loginDoc.md`
 
+#### 用法大全
+* 1.参数个数为 2 个时，表示直接提交某个md文档到 yapi 上，如 `yc /some/path/a.md`，token 从环境变量总获取 YC_TOKEN
+* 2.参数个数为 3 个时，如 `yc file /some/path/a.md` 同第一种功能
+* 3.参数个数为 3 个时，如 `yc dir /some/path` 表示使用环境变量中的 token 提交 path 目录下的所有 md 文档
+* 4.参数个数为 4 个时，如 `yc file someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该md文档
+* 5.参数个数为 4 个时，如 `yc dir someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该目录下的md文档
+
 ## todo
 - [x] 更新文档到组织的 yapi 服务中
 
