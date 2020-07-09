@@ -35,18 +35,17 @@ class Application extends BaseApplication
 
     /** @var array Application config data */
     private $config = [
-        'name'         => 'My Console Application',
-        'description'  => 'This is my console application',
+        'name'         => 'yapi commit helper',
+        'description'  => 'yapi commit helper',
         'debug'        => 'debug',
         'profile'      => false,
-        'version'      => '0.1.1',
+        'version'      => self::VERSION,
         'publishAt'    => '2020.05.24',
         'updateAt'     => '2020.06.10',
         'rootPath'     => '',
         'strictMode'   => false,
         'hideRootPath' => true,
-
-        // 'timeZone' => 'Asia/Shanghai',
+        'timeZone' => 'Asia/Shanghai',
         // 'env' => 'prod', // dev test prod
         // 'charset' => 'UTF-8',
 
@@ -80,10 +79,8 @@ LOGO;
      */
     public function setConfig()
     {
-        $this->app->setConfig(['name' => 'yapi commit helper']);
-        $this->app->setConfig(['description' => 'yapi commit helper']);
+        $this->app->setConfig($this->config);
         $this->app->setConfig(['logoText' => $this->logo]);
-        $this->app->setConfig(['version' => VERSION]);
     }
 
     /**
