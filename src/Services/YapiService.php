@@ -29,6 +29,7 @@ class YapiService
      * 3.参数个数为 3 个时，如 `yc dir /some/path` 表示使用环境变量中的 token 提交 path 目录下的所有 md 文档
      * 4.参数个数为 4 个时，如 `yc file someTokenFlag /some/path/a.md` 表示使用 someTokenFlag 对应的 token 提交该md文档
      * 5.参数个数为 4 个时，如 `yc dir someTokenFlag /some/path` 表示使用 someTokenFlag 对应的 token 提交目录`/some/path`下的md文档
+     * 6.参数个数为 3 个时，如 `yc token list` 获取 env 配置中的 token flag 列表
      */
     public static function doSaveOrUpdate()
     {
@@ -58,6 +59,17 @@ class YapiService
                 throw new \Exception("请配置环境变量 YC_TOKEN", -1);
             }
             $actionType = $cliArgs[1];// file/fold
+            switch ($actionType) {
+                case 'token':// 表示获取 token flag 列表
+                    $tokenKeys = array_keys($tokenList);
+                    $cmd       = "【 yc file {$tokenKeys[0]} /path/to/doc.md 】";
+                    $tokensJson = json_encode($tokenKeys, 320);
+                    echo "请确定使用的 token，例如：{$cmd}\n
+可选的 token key 列表：{$tokensJson}\n";
+                    die;
+                    break;
+                default:
+            }
             $file      = $cliArgs[2];
             if (strpos($file, '/') !== 0) {
                 $file = realpath($file);

@@ -117,6 +117,10 @@ LOGO;
             YapiService::doSaveOrUpdate();
         }, 'Enter a doc dir path');
 
+        $this->app->command('token', function(Input $in, Output $out) {
+            YapiService::doSaveOrUpdate();
+        }, 'about token info');
+
         $this->app->command('hello', function(Input $in, Output $out) {
             $out->info("hello terminal");
         }, 'this a test cmd');
