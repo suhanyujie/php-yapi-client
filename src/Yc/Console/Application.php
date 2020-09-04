@@ -9,6 +9,7 @@
 namespace App\Yc\Console;
 
 use App\Services\YapiService;
+use App\Services\YapiTokenService;
 use Symfony\Component\Console\Application as BaseApplication;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
@@ -97,7 +98,7 @@ LOGO;
             $this->app->showVersionInfo();
             $this->app->showHelpInfo();
             die;
-        } elseif($paramCount ===2 ) {
+        } elseif ($paramCount === 2) {
             YapiService::doSaveOrUpdate();
             die;
         }
@@ -109,6 +110,9 @@ LOGO;
      */
     public function customerRegist()
     {
+        $this->app->command('token:list', function(Input $in, Output $out) {
+            YapiTokenService::listTokenFlag();
+        }, '');
         $this->app->command('file', function(Input $in, Output $out) {
             YapiService::doSaveOrUpdate();
         }, 'Enter a doc file path');
